@@ -1,0 +1,25 @@
+option solver cplexamp;
+
+model arbre_couvrant_2.mod;
+
+#Read the data file
+read n < test.txt;
+for {i in N} {
+	read {j in N} G[i, j] < test.txt;
+}
+
+#Main problem
+solve;
+
+printf "TAILLE : ";
+display taille;
+
+printf "\n";
+
+#Optimisation time
+param time := _ampl_elapsed_time + _total_solve_elapsed_time;
+printf "Total time : %f\n", time;
+
+for{i in N, j in N}
+	if(x[i, j] == 1) then
+		printf "x [%d, %d]= %d \n", i, j, x[i, j];

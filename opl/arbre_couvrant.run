@@ -1,0 +1,77 @@
+option solver cplexamp;
+
+model arbre_couvrant.mod;
+
+#Read the data file
+read n < test01.txt;
+for {i in N} {
+	read {j in N} G[i, j] < test.txt;
+}
+
+let p := 1;
+
+let {i in N} comb[1, i] := 0;
+let comb[1, n] := 1;
+
+#param retenue;
+
+#for {k in 2..p}
+#{
+#	let {i in N} comb[k, i] := comb[k - 1, i];
+#	let retenue := 1;
+
+#	for {i in N}
+#	{
+#		if retenue = 0
+#			then break;
+#			else if comb[k - 1, n + 1 - i] = 0
+#				then
+#				{
+#					let comb[k, n + 1 - i] := 1;
+#					let retenue := 0;
+#				}
+#				else let comb[k, n + 1 - i] := 0;
+#	}
+#}
+
+#Main problem
+problem Master_pb : x, y, taille, boucles, aretes, noeuds;
+	option relax_integrality 0;
+problem Sub_pb : subSet, sub, minSize, maxSize;
+	option relax_integrality 0;
+
+#Loop until the problem is solved
+repeat{
+	#printf "Master problem solving \n";
+	solve Master_pb;
+
+	printf "AFFICHAGE TAILLE : ";
+	display taille;
+
+	#We affect the solution obtained to the sub problem
+	let {i in 1..(n - 1), j in 1..(n - i)} edges[i, j] := x[i, j];
+
+	#printf "Sub problem solving \n";
+	solve Sub_pb;
+
+	if sub < 1 - 0.00001 then {
+		printf "AFFICHAGE SUB : ";
+		display sub;
+		#We had a new constraint to the main problem
+		let p := p + 1;
+		let {i in N} comb[p, i] := subSet[i];
+	}
+	else{
+		printf "AFFICHAGE SUB : ";
+		display sub;
+		break;
+	}
+}
+
+#Optimisation time
+param time := _ampl_elapsed_time + _total_solve_elapsed_time;
+printf "Total time : %f\n", time;
+
+for{i in 1..(n-1), j in 1..(n-i)}
+	if(x[i, j] = 1) then
+		printf "[%d, %d] \n", i, i + j;
