@@ -1,0 +1,10 @@
+data/
+*.tar
+*.zip
+*.pdf
+*.o
+src/*.o
+src/Debug/
+src/Release/
+src/*.vcxproj*
+src/.vs/

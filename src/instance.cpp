@@ -18,7 +18,6 @@ Instance::Instance(string const file_name) {
 void Instance::read_file() {
 	n = 0;
 	int k = 0;
-  cout << "It's me"<< endl;
 	ifstream fid(this->file_name.c_str(), ios::in);
     if (!fid) {
         std::string msg = "impossible d'ouvrir \"" + file_name + "\"";
@@ -65,7 +64,6 @@ void Instance::read_file() {
 
 
 vector<pair<int,int>> Instance::liste_sommets_isoles(){
-  cout<< "Hello"<<endl;
   vector<pair<int,int>> listeSommets = vector<pair<int,int>>();
 
   for(int i = 0; i < this->n; i++){
@@ -80,7 +78,5 @@ vector<pair<int,int>> Instance::liste_sommets_isoles(){
       listeSommets.push_back(pair<int, int>(i,voisin));
     }
   }
-
 return listeSommets;
-
 }

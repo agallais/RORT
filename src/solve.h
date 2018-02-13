@@ -17,7 +17,7 @@ class Solve {
 		// nom de l'instance (e.g. velib_1_s010_r2_k5..6_v11)
 		string file_name;
 
-		// Construteur par défaut
+		// Construteur par dï¿½faut
 		Solve(){};
 
 		// Le destructeur
@@ -28,6 +28,8 @@ class Solve {
 
 		bool pas_un_cycle(pair<int, int>& a_tester);
 		void genere_sol(Instance& inst);
+		void solution(Instance& inst);
+		void add(pair<int,int> arete);
 };
 
 #endif

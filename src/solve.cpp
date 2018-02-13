@@ -15,7 +15,7 @@ bool Solve::pas_un_cycle(pair<int, int>& a_tester){
 		for(int i = 0; i < krusky.size(); i++){
 			// Soit relie par une arete
 			if(krusky[sommet_courant][i] == 1 || krusky[i][sommet_courant] == 1){
-	
+
 				if((sommets_testes[i] != -1 || i == a_tester.first) && sommets_testes[sommet_courant] != i){ //a deja ete visite, mais pas de i
 						success = false;
 						break;
@@ -59,3 +59,14 @@ void Solve::genere_sol(Instance& inst) {
 	}
 	return;
 }
+
+
+void Solve::solution(Instance& inst){
+krusky = vector<vector<int>>(inst.n, vector<int>(inst.n,0));
+return;
+}
+
+void Solve::add(pair<int,int> arete){
+	this->krusky[arete.first][arete.second] = 1;
+	this->krusky[arete.second][arete.first] = 1;
+};
